@@ -1,9 +1,9 @@
-import {AfterViewInit, Component, Input, OnInit } from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit} from '@angular/core';
 import {Terminal} from 'xterm';
 import {NavList} from '../../pages/control/control/control.component';
 import {UUIDService} from '../../app.service';
 import {CookieService} from 'ngx-cookie-service';
-import {TermWS} from '../../globals';
+import {TermWS, DataStore} from '../../globals';
 
 const ws = TermWS;
 
@@ -22,6 +22,16 @@ export class ElementSshTermComponent implements OnInit, AfterViewInit {
   secret: string;
 
   constructor(private _uuid: UUIDService, private _cookie: CookieService) {
+  }
+
+  contextMenu($event) {
+    console.log('contextMenu');
+    this.term.focus();
+    if (DataStore.termSelection !== '') {
+      ws.emit('data', {'data': DataStore.termSelection, 'room': NavList.List[this.index].room});
+      $event.preventDefault();
+    }
+
   }
 
   ngOnInit() {
@@ -45,8 +55,25 @@ export class ElementSshTermComponent implements OnInit, AfterViewInit {
     ws.emit('resize', {'cols': size[0], 'rows': size[1]});
   }
 
+  reconnect() {
+
+    if (this.host) {
+      if (NavList.List[this.index].connected === true) {
+        this.close();
+      }
+      this.secret = this._uuid.gen();
+      ws.emit('host', {
+        'uuid': this.host.id,
+        'userid': this.userid,
+        'secret': this.secret,
+        'size': [this.term.cols, this.term.rows]
+      });
+    }
+  }
+
   joinRoom() {
     NavList.List[this.index].Term = this.term;
+    NavList.List[this.index].termComp = this;
     console.log(this.term);
     console.log('Col: ', this.term.cols, 'rows', this.term.rows);
     if (this.host) {
@@ -64,6 +91,10 @@ export class ElementSshTermComponent implements OnInit, AfterViewInit {
       });
     }
     const that = this;
+    this.term.on('selection', function () {
+      document.execCommand('copy');
+      DataStore.termSelection = this.getSelection();
+    });
 
     this.term.on('data', function (data) {
       ws.emit('data', {'data': data, 'room': NavList.List[that.index].room});
@@ -89,6 +120,7 @@ export class ElementSshTermComponent implements OnInit, AfterViewInit {
     ws.on('room', data => {
       if (data['secret'] === this.secret) {
         NavList.List[that.index].room = data['room'];
+        NavList.List[this.index].connected = true;
       }
     });
   }

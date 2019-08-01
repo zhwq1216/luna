@@ -1,15 +1,15 @@
-import {AfterViewInit, Component, Input, Output, OnInit, ViewChild, EventEmitter} from '@angular/core';
-import {ElementRef} from '@angular/core';
-import {Terminal} from 'xterm';
-import {fit} from 'xterm/lib/addons/fit/fit';
-import {Observable} from 'rxjs/Rx';
-import {CookieService} from 'ngx-cookie-service';
+import { AfterViewInit, Component, Input, Output, OnInit, ViewChild, EventEmitter } from '@angular/core';
+import { ElementRef } from '@angular/core';
+import { Terminal } from 'xterm';
+import { fit } from 'xterm/lib/addons/fit/fit';
+import { Observable } from 'rxjs/Rx';
+import { CookieService } from 'ngx-cookie-service';
 import * as $ from 'jquery/dist/jquery.min.js';
 import 'rxjs/Observable';
 import 'rxjs/add/operator/debounceTime';
 import 'rxjs/add/operator/distinctUntilChanged';
 
-import {NavList} from '../../pages/control/control/control.component';
+import { NavList } from '../../pages/control/control/control.component';
 
 
 @Component({
@@ -55,10 +55,10 @@ export class ElementTermComponent implements OnInit, AfterViewInit {
       const activeEle = $('#winContainer');
       const elementStyle = window.getComputedStyle(this.term.element);
       const elementPadding = {
-          top: parseInt(elementStyle.getPropertyValue('padding-top'), 10),
-          bottom: parseInt(elementStyle.getPropertyValue('padding-bottom'), 10),
-          right: parseInt(elementStyle.getPropertyValue('padding-right'), 10),
-          left: parseInt(elementStyle.getPropertyValue('padding-left'), 10)
+        top: parseInt(elementStyle.getPropertyValue('padding-top'), 10),
+        bottom: parseInt(elementStyle.getPropertyValue('padding-bottom'), 10),
+        right: parseInt(elementStyle.getPropertyValue('padding-right'), 10),
+        left: parseInt(elementStyle.getPropertyValue('padding-left'), 10)
       };
       const elementPaddingVer = elementPadding.top + elementPadding.bottom;
       const elementPaddingHor = elementPadding.right + elementPadding.left;

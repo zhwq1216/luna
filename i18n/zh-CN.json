@@ -60,5 +60,7 @@
   "set font": "设置字体",
   "font": "字体",
   "font size": "字体大小",
-  "full screen": "全屏显示"
+  "full screen": "全屏显示",
+  "Tab List": "窗口列表",
+  "Reconnect": "重新连接"
 }
