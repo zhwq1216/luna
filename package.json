@@ -4,8 +4,8 @@
   "license": "GPLv3",
   "scripts": {
     "ng": "ng",
-    "start": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0",
-    "build": "ng build --environment prod --aot --prod --base-href=/luna/  --deploy '/luna/'",
+    "start": "ng serve --proxy-config proxy.conf.json --host 0.0.0.0 --base-href=/luna/",
+    "build": "ng build --environment prod --aot --prod --base-href=/luna/  --deploy /luna/",
     "test": "ng test",
     "lint": "ng lint",
     "e2e": "ng e2e"
