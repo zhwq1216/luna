@@ -90,9 +90,9 @@ export class ElementConnectComponent implements OnInit, OnDestroy {
 
   async connectAsset(node: TreeNode) {
     const host = node.meta.asset as Asset;
-    const systemUsers = await this._http.getMyAssetSystemUsers(host.id).toPromise();
-    let sysUser = await this.selectLoginSystemUsers(systemUsers);
-    sysUser = await this.manualSetUserAuthLoginIfNeed(sysUser);
+    const systemUsers = node.meta.system_users; // await this._http.getMyAssetSystemUsers(host.id).toPromise();
+    let sysUser = systemUsers[0]; // await this.selectLoginSystemUsers(systemUsers);
+    // sysUser = await this.manualSetUserAuthLoginIfNeed(sysUser);
     if (sysUser && sysUser.id) {
       this.loginAsset(host, sysUser);
     } else {

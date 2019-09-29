@@ -49,6 +49,8 @@ import 'core-js/es7/reflect';
 // import 'web-animations-js';  // Run `npm install --save web-animations-js`.
 
 
+// fix socket.io-client global is not defined
+(window as any).global = window;
 
 /***************************************************************************************************
  * Zone JS is required by Angular itself.
