@@ -75,6 +75,15 @@ export class ElementSshTermComponent implements OnInit, AfterViewInit, OnDestroy
     });
     this.view.Term = this.term;
     this.view.termComp = this;
+    this.term.attachCustomKeyEventHandler(e => {
+      if (e.ctrlKey && e.key === 'c' && this.term.hasSelection()) {
+        return false;
+      }
+      if (e.ctrlKey && e.key === 'v') {
+        return false;
+      }
+      return true;
+    });
   }
 
   changeWinSize(size: Array<number>) {
